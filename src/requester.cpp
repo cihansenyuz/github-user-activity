@@ -2,8 +2,8 @@
 #include <fstream>
 #include <iostream>
 
-Requester::Requester()
-    : socket_{io_context_}, response_{} {
+Requester::Requester(const std::string& server)
+    : server_{server}, socket_{io_context_}, response_{} {
 }
 
 void Requester::CreateConnection() {

@@ -14,7 +14,7 @@ constexpr const char* PORT = "80";
 class Requester : public IRequester{
 protected:
     std::string json_string_;
-    std::string request_;
+    std::string server_, request_;
     boost::asio::io_context io_context_;
     boost::asio::ip::tcp::socket socket_;
     boost::asio::streambuf response_;
@@ -26,7 +26,7 @@ protected:
     virtual void ProcessResponse() override;
 
 public:
-    Requester();
+    Requester(const std::string& server);
     virtual ~Requester() = default;
     const std::string& GetResponse() const override;
 };
