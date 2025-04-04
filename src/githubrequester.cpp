@@ -3,12 +3,13 @@
 #include "../inc/githubrequester.hpp"
 
 GitHubRequester::GitHubRequester(const std::string& username)
-    : username_{username}, Requester{SERVER} {}
+    : username_{username}, Requester{"api.github.com"} {}
 
 void GitHubRequester::CreateRequest(){
     request_.clear();
-    request_ += "GET https://api.github.com/users/" + username_ + "/events";
+    request_ += "GET /users/" + username_ + "/events HTTP/1.1\r\n";
     request_ += "Host: " + server_ + "\r\n";
+    request_ += "User-Agent: github_user_activity_fetcher/0.1\r\n";
     request_ += "Connection: close\r\n\r\n";
 }
 

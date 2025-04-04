@@ -9,7 +9,7 @@
 #include <boost/asio.hpp>
 #include "irequester.hpp"
 
-constexpr const char* PORT = "80";
+constexpr const char* PORT = "443";
 
 class Requester : public IRequester{
 protected:
