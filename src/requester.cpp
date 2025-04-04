@@ -1,9 +1,9 @@
-#include "requester.hpp"
+#include "../inc/requester.hpp"
 #include <fstream>
 #include <iostream>
 
-Requester::Requester(const std::string& server, const std::string& key)
-    : server_{server}, key_{key}, socket_{io_context_}, response_{} {
+Requester::Requester()
+    : socket_{io_context_}, response_{} {
 }
 
 void Requester::CreateConnection() {
