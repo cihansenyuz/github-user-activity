@@ -8,6 +8,5 @@ int main(){
     
     std::cout << response << std::endl;
 
-    // delete ghr;
     return 0;
 }
