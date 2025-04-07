@@ -2,11 +2,12 @@
 #include <iostream>
 
 int main(){
-    GitHubRequester *ghr = new GitHubRequester("cihansenyuz");
-    ghr->MakeRequestToApi();
-    std::string response = ghr->GetResponse();
+    GitHubRequester ghr("cihansenyuz");
+    ghr.MakeRequestToApi();
+    std::string response = ghr.GetResponse();
     
     std::cout << response << std::endl;
 
+    // delete ghr;
     return 0;
 }
