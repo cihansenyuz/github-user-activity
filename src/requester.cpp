@@ -3,13 +3,17 @@
 #include <iostream>
 
 Requester::Requester(const std::string& server)
-    : server_{server}, socket_{io_context_}, response_{} {}
+    : server_{server}, socket_{io_context_, ssl_context_}, response_{} {
+
+    ssl_context_.set_default_verify_paths();
+}
 
 void Requester::CreateConnection() {
     boost::asio::ip::tcp::resolver resolver(io_context_);
     // std::cout << "[Requester][CreateConnection]server: " << server_ << std::endl;
     auto endpoints = resolver.resolve(server_, PORT);
-    boost::asio::connect(socket_, endpoints);
+    boost::asio::connect(socket_.lowest_layer(), endpoints);
+    socket_.handshake(boost::asio::ssl::stream_base::client);
 }
 
 void Requester::SendRequest(){
@@ -29,10 +33,15 @@ const std::string& Requester::GetResponse() const{
 }
 
 void Requester::ProcessResponse(){
-    std::cout << "debug\n";
-    read_until(socket_, response_, "\r\n\r\n");
+    std::size_t bytes_transferred = read_until(socket_, response_, "\r\n\r\n", error_);
+    
+    if (bytes_transferred == 0) {
+        std::cerr << "Error: No data received from the server.\n";
+        return;
+    }
+
     std::istream response_stream(&response_);
-    std::cout << "[Requester][ProcessResponse] response: " << response_.data().data() << std::endl;
+    
     std::string http_version;
     unsigned int status_code;
     std::string status_message;
@@ -47,9 +56,8 @@ void Requester::ProcessResponse(){
 
     std::string header;
     
-    while (std::getline(response_stream, header) && header != "\r") {
-        std::cout << "[Requester][ProcessResponse] header: " << header << std::endl;
-    } // skip headers
+    while (std::getline(response_stream, header)
+            && header != "\r") {} // skip headers
     /* 
         headers and the body is seperated by \r\n in an http reply
         since getline reads until the \n, line ends with \r
@@ -62,7 +70,7 @@ void Requester::ProcessResponse(){
     while(read(socket_, response_, boost::asio::transfer_at_least(1), error_)) {
         std::istream response_stream(&response_);
         while (std::getline(response_stream, line)) {
-            std::cout << "[Requester][ProcessResponse] line: " << line << std::endl;
+            // std::cout << "[Requester][ProcessResponse] line: " << line << std::endl;
             json_string_ += line;
         }
     }

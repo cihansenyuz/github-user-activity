@@ -7,6 +7,7 @@
 
 #include <string>
 #include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
 #include "irequester.hpp"
 
 constexpr const char* PORT = "443";
@@ -16,7 +17,8 @@ protected:
     std::string json_string_;
     std::string server_, request_;
     boost::asio::io_context io_context_;
-    boost::asio::ip::tcp::socket socket_;
+    boost::asio::ssl::context ssl_context_{boost::asio::ssl::context::sslv23};
+    boost::asio::ssl::stream<boost::asio::ip::tcp::socket> socket_;
     boost::asio::streambuf response_;
     boost::system::error_code error_;
     
