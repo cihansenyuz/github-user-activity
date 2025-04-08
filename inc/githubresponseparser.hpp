@@ -42,6 +42,8 @@ public:
 
             parsed_events.push_back(event);
         }
+
+        return parsed_events;
     }
 
 private:
