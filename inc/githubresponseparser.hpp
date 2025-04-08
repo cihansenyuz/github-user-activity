@@ -9,6 +9,7 @@ class GitHubResponseParser{
 public:
     static std::vector<GitHubEvent> Parse(const std::string &response){
         nlohmann::json json_array;
+        std::vector<GitHubEvent> parsed_events;
 
         if(!json_array.is_array())
             throw std::runtime_error{"reponse is not a json array!"};
@@ -39,6 +40,7 @@ public:
             else
                 throw std::runtime_error{"invalid response: created_at field"};
 
+            parsed_events.push_back(event);
         }
     }
 

@@ -16,7 +16,7 @@ set(PROJECT_SOURCES main.cpp
             inc/requester.hpp
             inc/githubrequester.hpp
             inc/githubevent.hpp
-            int/githubresponseparser.hpp
+            inc/githubresponseparser.hpp
     )
 
 add_executable(github_user_activity_fetcher ${PROJECT_SOURCES})
