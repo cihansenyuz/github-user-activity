@@ -15,10 +15,10 @@ Displays the fetched activity in the terminal
 ### 2- cmake 3.22 -> to build project
 
 on ubuntu:
-
+```bash
 $ sudo apt update
 $ sudo apt install cmake
-
+```
 on windows:
 
 Go to https://cmake.org/download/ and download installer. Run the installer.
@@ -26,10 +26,10 @@ Go to https://cmake.org/download/ and download installer. Run the installer.
 ### 3- boost -> for tcp socket to send HTTP request
 
 on ubuntu:
-
+```bash
 $ sudo apt update
 $ sudo apt install libboost-all-dev
-
+```
 on windows:
 
 Download Boost from boost.org. Extract the .zip file. On cmd.exe,
@@ -40,10 +40,10 @@ $ .\b2
 ### 4- OpenSSL -> for encripted HTTP request (GitHub API forces to use HTTPS)
 
 on ubuntu:
-
-sudo apt update
-sudo apt install libssl-dev
-
+```bash
+$ sudo apt update
+$ sudo apt install libssl-dev
+```
 on windows:
 
 Seems quite complicated without package manager. So I decided not to mention :)
@@ -52,16 +52,19 @@ Seems quite complicated without package manager. So I decided not to mention :)
 
 on ubuntu, go to the folder of the repository
 then,
+```bash
 $ chmod +x rebuild.sh
 $ mkdir build
 $ cd build/
 $ ../rebuild.sh
+```
 
 ## How to use the app
 
 Provide the GitHub username as an argument when running the CLI.
+```bash
 $ ./github_user_activity_fetcher kamranahmedse
-
+```
 ### Example output
 
 ```bash
@@ -89,3 +92,4 @@ Request sent...
 	repository: cihansenyuz/github-user-activity
 2025-03-26T06:35:06Z CreateEvent
 	repository: cihansenyuz/github-user-activity
+```
