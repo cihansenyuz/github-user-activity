@@ -11,12 +11,14 @@ find_package(nlohmann_json REQUIRED)
 set(PROJECT_SOURCES main.cpp
             src/requester.cpp
             src/githubrequester.cpp
+            src/application.cpp
             
             inc/irequester.hpp
             inc/requester.hpp
             inc/githubrequester.hpp
             inc/githubevent.hpp
             inc/githubresponseparser.hpp
+            inc/application.hpp
     )
 
 add_executable(github_user_activity_fetcher ${PROJECT_SOURCES})
