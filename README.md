@@ -3,6 +3,8 @@
 A simple command line interface (CLI) to fetch the recent activity of a GitHub user and display it in the terminal.
 Project includes working with APIs, handling JSON data, and building a simple CLI application.
 
+The project bases on the requirement of https://roadmap.sh/projects/github-user-activity
+
 Fetches the recent activity of the specified GitHub user using the GitHub API.
 https://api.github.com/users/<username>/events
 
