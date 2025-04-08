@@ -8,7 +8,7 @@
 class GitHubResponseParser{
 public:
     static std::vector<GitHubEvent> Parse(const std::string &response){
-        nlohmann::json json_array;
+        nlohmann::json json_array = nlohmann::json::parse(response);
         std::vector<GitHubEvent> parsed_events;
 
         if(!json_array.is_array())
