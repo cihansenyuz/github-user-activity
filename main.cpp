@@ -1,12 +1,26 @@
 #include "inc/githubrequester.hpp"
+#include "inc/githubresponseparser.hpp"
 #include <iostream>
 
 int main(){
-    GitHubRequester *ghr = new GitHubRequester("cihansenyuz");
-    ghr->MakeRequestToApi();
-    std::string response = ghr->GetResponse();
+    GitHubRequester ghr("cihansenyuz");
+    ghr.MakeRequestToApi();
     
-    std::cout << response << std::endl;
+    std::string response = ghr.GetResponse();
+    
+    try{
+        auto events = GitHubResponseParser::Parse(response);
+        
+        for(const auto &event : events){
+            std::cout << event.date << " " << event.type
+                      << "\n\trepository: " << event.repository << std::endl;
+        }
+    }
+    catch(const std::exception &e){
+        std::cerr << "error: " << e.what() << std::endl;
+    }
+
+
 
     return 0;
 }
