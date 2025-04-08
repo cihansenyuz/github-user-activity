@@ -64,7 +64,16 @@ void Requester::ProcessResponse(){
         is the final line of the header
     */
 
+    // Read the body and skip until the first '['
     json_string_.clear();
+    char c;
+    while (response_stream.get(c)) {
+        if (c == '[') {
+            json_string_ += c; // Add the '[' to the JSON string
+            break;
+        }
+    }
+
     std::string line;
 
     while(read(socket_, response_, boost::asio::transfer_at_least(1), error_)) {
@@ -74,6 +83,13 @@ void Requester::ProcessResponse(){
             json_string_ += line;
         }
     }
+
+    // Skip remaining characters after the last ']'
+    auto last_bracket_pos = json_string_.find_last_of(']');
+    if (last_bracket_pos != std::string::npos) {
+        json_string_ = json_string_.substr(0, last_bracket_pos + 1);
+    }
+    
     // if (error_ == error::eof)
     //     std::cout << "[Requester][ProcessResponse] Server closed the connection.\n";
 

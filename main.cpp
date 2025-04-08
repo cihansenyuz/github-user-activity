@@ -7,13 +7,13 @@ int main(){
     ghr.MakeRequestToApi();
     
     std::string response = ghr.GetResponse();
-
+    
     try{
         auto events = GitHubResponseParser::Parse(response);
         
         for(const auto &event : events){
             std::cout << event.date << " " << event.type
-                      << "/trepository: " << event.repository << std::endl;
+                      << "\n\trepository: " << event.repository << std::endl;
         }
     }
     catch(const std::exception &e){

@@ -25,10 +25,13 @@ public:
                 throw std::runtime_error{"invalid response: type field"};
 
             if(json_object.contains(GitHubEvent::repo_field)
-                && json_object[GitHubEvent::repo_field].is_object()
-                && json_object.contains(GitHubEvent::repo_name)
-                && json_object[GitHubEvent::repo_name].is_string()){
-                    event.repository = json_object[GitHubEvent::repo_name];
+                && json_object[GitHubEvent::repo_field].is_object()){
+
+                nlohmann::json json_repo_object = json_object[GitHubEvent::repo_field];
+                
+                if(json_repo_object.contains(GitHubEvent::repo_name)
+                && json_repo_object[GitHubEvent::repo_name].is_string())
+                    event.repository = json_repo_object[GitHubEvent::repo_name];
             }
             else
                 throw std::runtime_error{"invalid response: repo field"};
